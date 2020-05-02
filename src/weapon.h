@@ -7,7 +7,7 @@ public:
     virtual void Update();
     virtual bool WeaponCell(int x, int y);
 
-    bool destroyed{false}; 
+    bool destroyed{false}; // (1)hitting target or (2)remove from frame
 
 private:
     float _angle;
@@ -17,10 +17,3 @@ private:
     int _grid_width;
     int _grid_height;
 };
-
-/*
-
-* every time ship updates, check for all bullets, whether `destroyed` by (1)hitting target or (2)remove from frame
-*  
-
-*/
