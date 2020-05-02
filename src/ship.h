@@ -1,7 +1,7 @@
 #include <vector>
 #include "SDL.h"
 
-#include "bullet.h"
+#include "weapon.h"
 
 class Ship {
 public:
@@ -26,5 +26,5 @@ public:
 
 private: 
     float _shootingSpeed{0.1f};
-    std::vector<Bullet> _bullets; 
+    std::vector<Weapon> _bullets; 
 };
