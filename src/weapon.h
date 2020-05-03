@@ -1,19 +1,24 @@
+#ifndef WEAPON_H
+#define WEAPON_H
 
-class Weapon {
+class Weapon
+{
 public:
     Weapon() = delete;
-    Weapon(int width, int height, int x, int y, float angle);
+    Weapon(int width, int height, float x, float y, float angle);
+    Weapon(const Weapon& w);
 
     virtual void Update();
     virtual bool WeaponCell(int x, int y);
 
     bool destroyed{false}; // (1)hitting target or (2)remove from frame
+    float x, y; // position
 
-private:
-    float _angle;
-    float _x;
-    float _y;
-    
-    int _grid_width;
-    int _grid_height;
+protected:
+    float angle;
+
+    int grid_width;
+    int grid_height;
 };
+
+#endif
