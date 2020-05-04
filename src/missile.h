@@ -6,11 +6,13 @@
 class Missile : public Weapon
 {
 public:
-    Missile() = delete;
     Missile(int width, int height, float x, float y, float angle)
-        : Weapon(width, height, x, y, angle){};
-    Missile(const Missile& m)
-        : Weapon(m.grid_width, m.grid_width, m.x, m.y, m.angle) {};
+        : Weapon(width, height, x, y, angle) {};
+    Missile(const Missile& m);
+    Missile(Missile&& m);
+    Missile &operator=(const Missile &w);
+    Missile &operator=(Missile &&w);
+    ~Missile() {};
 
     void Update() override;
     bool WeaponCell(int x, int y) override { return x == this->x && y == this->y; };

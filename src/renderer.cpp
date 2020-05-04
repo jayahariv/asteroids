@@ -71,7 +71,7 @@ void Renderer::Render(Ship const ship, std::vector<Asteroid> asteriods) {
 
   // Render Weapons
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
-  for (auto &w : ship.weapons)
+  for (auto const &w : ship.weapons)
   {
     block.x = w->x * block.w;
     block.y = w->y * block.h;
