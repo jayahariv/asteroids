@@ -15,7 +15,6 @@ public:
     ~Missile() {};
 
     void Update() override;
-    bool WeaponCell(int x, int y) override { return x == this->x && y == this->y; };
 
 private:
     float _speed{0.1};

@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Ship const ship, std::vector<Asteroid> asteriods) {
+void Renderer::Render(Ship &ship, std::vector<Asteroid> asteriods) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;

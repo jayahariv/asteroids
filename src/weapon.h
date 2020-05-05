@@ -12,7 +12,7 @@ public:
     virtual ~Weapon(){};
 
     virtual void Update() = 0;
-    virtual bool WeaponCell(int x, int y);
+    bool WeaponCell(int x, int y) { return x == this->x && y == this->y; };
 
     bool destroyed{false}; // (1)hitting target or (2)remove from frame
     float x, y;            // position
