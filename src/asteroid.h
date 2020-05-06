@@ -4,7 +4,8 @@
 class Asteroid {
 public:
     Asteroid() = delete;
-    Asteroid(float x, float y): x(x), y(y) {};
+    Asteroid(int grid_width, int grid_height, float x, float y)
+        : x(x), y(y), _grid_width(grid_width), _grid_height(grid_height) {};
     
     void Update();
 
@@ -13,6 +14,7 @@ public:
 
 private:
     float _speed{0.03};
+    int _grid_width, _grid_height;
 };
 
 #endif

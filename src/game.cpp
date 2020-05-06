@@ -3,10 +3,12 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : ship(grid_width, grid_height),
-      engine(dev()),
-      random_w(0, static_cast<int>(grid_width)),
-      random_h(0, static_cast<int>(grid_height)) { }
+    : ship(grid_width, grid_height)
+    , engine(dev())
+    , random_w(0, static_cast<int>(grid_width)) 
+    , random_h(0, static_cast<int>(grid_height))
+    , _grid_width(grid_width)
+    , _grid_height(grid_height) { }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
                std::size_t target_frame_duration) {
@@ -57,7 +59,7 @@ void Game::GenerateAsteroids() {
     y = 0; 
 
     if (!ship.ShipCell(x, y)) {
-      Asteroid a(x, y);
+      Asteroid a(_grid_width, _grid_height, x, y);
       asteroids.push_back(a); // todo: leak
     }
   }

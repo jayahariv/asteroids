@@ -20,6 +20,7 @@ class Game {
  private:
   Ship ship;
   std::vector<Asteroid> asteroids;
+  std::size_t _grid_width, _grid_height;
 
   std::random_device dev;
   std::mt19937 engine;
