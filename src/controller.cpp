@@ -25,6 +25,9 @@ void Controller::HandleInput(bool &running, Ship &ship) const {
           ship.angle = Ship::Angle::kRight;
           break;
       }
+    } else if (e.type == SDL_KEYUP) {
+      ship.direction = Ship::Direction::kNone;
+      ship.angle = Ship::Angle::kNone;
     }
   }
 }

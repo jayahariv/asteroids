@@ -69,8 +69,12 @@ void Ship::RemoveDestroyedWeapons()
 
 void Ship::LoadNewWeapon()
 {
-    auto w = std::make_unique<Missile>(_grid_width, _grid_height, x, y, 1.0);
-    weapons.push_back(std::move(w));
+    auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    if (now - _last_weapon_load > _weapon_cooldown) {
+        auto w = std::make_unique<Missile>(_grid_width, _grid_height, x, y, 1.0);
+        weapons.push_back(std::move(w));
+        _last_weapon_load = now;
+    }
 }
 
 void Ship::UpdateWeapons()

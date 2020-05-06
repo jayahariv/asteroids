@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "SDL.h"
+#include <chrono>
+#include <ctime>
 
 #include "weapon.h"
 
@@ -38,8 +40,9 @@ public:
 private:
     int _grid_width, _grid_height;
     float _speed{0.1f};
+    float _weapon_cooldown{0.3}; // cool down before loading next weapon
 
-    float _shootingSpeed{0.1f};
+    std::time_t _last_weapon_load{static_cast<std::time_t>(0)};
 
     void UpdatePosition();
     void RemoveDestroyedWeapons();

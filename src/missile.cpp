@@ -40,6 +40,5 @@ Missile &Missile::operator=(Missile &&m)
 void Missile::Update()
 {
     // todo: include angle !!
-    x += _speed;
     y -= _speed;
 }
