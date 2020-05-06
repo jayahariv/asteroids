@@ -2,5 +2,5 @@
 
 void Asteroid::Update() 
 {
-    y -= _speed;
+    y += _speed;
 }

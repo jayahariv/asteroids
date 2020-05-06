@@ -12,7 +12,7 @@ public:
     bool destroyed{false};
 
 private:
-    float _speed{0.1};
+    float _speed{0.03};
 };
 
 #endif

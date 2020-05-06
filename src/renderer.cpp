@@ -48,7 +48,7 @@ void Renderer::Render(Ship &ship, std::vector<Asteroid> asteriods) {
   SDL_RenderClear(sdl_renderer);
 
   // Render asteriods
-  for (auto a : asteriods) {
+  for (auto &a : asteriods) {
     if (a.destroyed) {
       SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0x00, 0xFF);
     } else {
