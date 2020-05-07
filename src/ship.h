@@ -32,7 +32,7 @@ public:
 
     Direction direction = Direction::kNone;
     Angle angle = Angle::kNone;
-
+    bool fire{false};
     bool destroyed{false};
     float x, y; //postion of ship
     std::vector<std::unique_ptr<Weapon>> weapons;
@@ -40,9 +40,9 @@ public:
 private:
     int _grid_width, _grid_height;
     float _speed{0.1f};
-    float _weapon_cooldown{0.3}; // cool down before loading next weapon
+    float _weapon_cooldown{0.3}; // (seconds) cool down before loading next weapon
 
-    std::time_t _last_weapon_load{static_cast<std::time_t>(0)};
+    std::chrono::time_point<std::chrono::steady_clock> _last_weapon_load{std::chrono::steady_clock::now()};
 
     void UpdatePosition();
     void RemoveDestroyedWeapons();

@@ -4,17 +4,23 @@
 class Asteroid {
 public:
     Asteroid() = delete;
-    Asteroid(int grid_width, int grid_height, float x, float y)
-        : x(x), y(y), _grid_width(grid_width), _grid_height(grid_height) {};
+    Asteroid(int grid_width, int grid_height, float x, float y, int size)
+        : _x(x), _y(y), _grid_width(grid_width), _grid_height(grid_height), _size(size) {};
     
     void Update();
+    const bool Destroyed()      { return _destroyed; };
+    const int Size()            { return _size; };
+    const float X()             { return _x; };
+    const float Y()             { return _y; };
 
-    float x, y;
-    bool destroyed{false};
+    bool hit{false}; // asteroid got hit by weapon?
 
 private:
     float _speed{0.03};
     int _grid_width, _grid_height;
+    bool _destroyed{false};
+    int _size; // size of the asteroid, 
+    float _x, _y;
 };
 
 #endif

@@ -2,8 +2,15 @@
 
 void Asteroid::Update() 
 {
-    y += _speed;
+    _y += _speed;
 
-    if (y >= _grid_height)
-        destroyed = true;
+    if (_y >= _grid_height)
+        _destroyed = true;
+
+    if (hit) {
+        --_size;
+        hit = false;
+    }
+
+    _destroyed = _size == 0;
 }

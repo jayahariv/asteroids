@@ -7,6 +7,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
     , engine(dev())
     , random_w(0, static_cast<int>(grid_width)) 
     , random_h(0, static_cast<int>(grid_height))
+    , random_size(1, 4)
     , _grid_width(grid_width)
     , _grid_height(grid_height) { }
 
@@ -53,13 +54,14 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 void Game::GenerateAsteroids() {
   if (asteroids.size() == MAX_ASTEROIDS) return;
   
-  int x, y;
+  int x, y, size;
   while (asteroids.size() < MAX_ASTEROIDS ) {
     x = random_w(engine);
     y = 0; 
+    size = random_size(engine);
 
     if (!ship.ShipCell(x, y)) {
-      Asteroid a(_grid_width, _grid_height, x, y);
+      Asteroid a(_grid_width, _grid_height, x, y, size);
       asteroids.push_back(a); // todo: leak
     }
   }
@@ -71,7 +73,7 @@ void Game::Update() {
   // remove destroyed asteriods
   while (true) 
   {
-    auto iter = std::find_if(asteroids.begin(), asteroids.end(), [](auto const &a) { return a.destroyed; });
+    auto iter = std::find_if(asteroids.begin(), asteroids.end(), [](auto &a) { return a.Destroyed(); });
     if (iter != asteroids.end())
       asteroids.erase(iter);
     else 
@@ -87,15 +89,15 @@ void Game::Update() {
   int new_y = static_cast<int>(ship.y);
   for (auto &a : asteroids) {
     a.Update();
-    if ((int)a.x == new_x && (int)a.y == new_y) {
+    if ((int)a.X() == new_x && (int)a.Y() == new_y) {
       ship.destroyed = true;
       return;
     }
 
     for (auto const& w : ship.weapons) {
       // todo: range of weapon impact needs to be increased
-      if ((int)a.x == (int)w->x && (int)a.y == (int)w->y) {
-        a.destroyed = true;
+      if (!a.Destroyed() && (int)a.X() == (int)w->x && (int)a.Y() == (int)w->y) {
+        a.hit = true;
         _score++;
       }
     }
