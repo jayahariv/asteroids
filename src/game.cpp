@@ -5,9 +5,8 @@
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : ship(grid_width, grid_height)
     , engine(dev())
-    , random_w(0, static_cast<int>(grid_width)) 
-    , random_h(0, static_cast<int>(grid_height))
-    , random_size(1, 4)
+    , random_w(0, static_cast<int>(grid_width - 3))  // width minus size 
+    , random_size(1, 3)
     , _grid_width(grid_width)
     , _grid_height(grid_height) { }
 
@@ -58,7 +57,7 @@ void Game::GenerateAsteroids() {
   while (asteroids.size() < MAX_ASTEROIDS ) {
     x = random_w(engine);
     y = 0; 
-    size = random_size(engine);
+    size = 10 * random_size(engine);
 
     if (!ship.ShipCell(x, y)) {
       Asteroid a(_grid_width, _grid_height, x, y, size);
@@ -89,17 +88,19 @@ void Game::Update() {
   int new_y = static_cast<int>(ship.y);
   for (auto &a : asteroids) {
     a.Update();
-    if ((int)a.X() == new_x && (int)a.Y() == new_y) {
+    if (abs(a.X() - new_x) <= 1  && abs(a.Y() - new_y) <= 1) {
       ship.destroyed = true;
       return;
     }
 
     for (auto const& w : ship.weapons) {
-      // todo: range of weapon impact needs to be increased
-      if (!a.Destroyed() && (int)a.X() == (int)w->x && (int)a.Y() == (int)w->y) {
-        a.hit = true;
-        _score++;
+      if (!a.Destroyed() && abs(a.X() - w->x) <= 1 && abs(a.Y() - w->y) <= 1) {
+        a.Hit(w->Size());
+        w->destroyed = true; 
       }
     }
+
+    if (a.Destroyed())
+      _score++;
   }
 }

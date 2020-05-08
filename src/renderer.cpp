@@ -40,8 +40,8 @@ Renderer::~Renderer() {
 
 void Renderer::Render(Ship &ship, std::vector<Asteroid> asteriods) {
   SDL_Rect block;
-  block.w = screen_width / grid_width;
-  block.h = screen_height / grid_height;
+  float width = screen_width / grid_width;
+  float height = screen_height / grid_height;
 
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
@@ -49,13 +49,15 @@ void Renderer::Render(Ship &ship, std::vector<Asteroid> asteriods) {
 
   // Render asteriods
   for (auto &a : asteriods) {
-    
-    SDL_SetRenderDrawColor(sdl_renderer, a.Size() == 4 ? 0xFF :  0x10
-                            , a.Size() == 3 ? 0xFF : 0x10, a.Size() == 2 ? 0xFF : 0x00, 0xFF);
-    block.x = a.X() * block.w;
-    block.y = a.Y() * block.h;
+    SDL_SetRenderDrawColor(sdl_renderer, a.Size() == 3 ? 0x99 : a.Size() == 2 ? 0x7E : 0xA9 , 0x4C, 0x00, 0xFF);
+    block.x = a.X() * width;
+    block.y = a.Y()  * height;
+    block.w = a.Size();
+    block.h = a.Size();
     SDL_RenderFillRect(sdl_renderer, &block);
   }
+  block.w = width;
+  block.h = height;
 
   // Render Ship
   if (ship.destroyed) {
@@ -71,10 +73,14 @@ void Renderer::Render(Ship &ship, std::vector<Asteroid> asteriods) {
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   for (auto const &w : ship.weapons)
   {
-    block.x = w->x * block.w;
-    block.y = w->y * block.h;
+    block.x = (w->x) * width;
+    block.y = (w->y) * height;
+    block.w = w->Size();
+    block.h = w->Size();
     SDL_RenderFillRect(sdl_renderer, &block);
   }
+  block.w = width;
+  block.h = height;
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);

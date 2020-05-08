@@ -12,8 +12,7 @@ public:
     const int Size()            { return _size; };
     const float X()             { return _x; };
     const float Y()             { return _y; };
-
-    bool hit{false}; // asteroid got hit by weapon?
+    void Hit(int weaponSize)          { _impact = weaponSize; }
 
 private:
     float _speed{0.03};
@@ -21,6 +20,7 @@ private:
     bool _destroyed{false};
     int _size; // size of the asteroid, 
     float _x, _y;
+    int _impact{0}; // impact of hit
 };
 
 #endif

@@ -7,10 +7,8 @@ void Asteroid::Update()
     if (_y >= _grid_height)
         _destroyed = true;
 
-    if (hit) {
-        --_size;
-        hit = false;
-    }
+    _size -= _impact;
+    _impact = 0;
 
     _destroyed = _size == 0;
 }
