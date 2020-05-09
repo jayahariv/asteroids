@@ -1,6 +1,5 @@
-#include "game.h"
-#include <iostream>
 #include "SDL.h"
+#include "game.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : ship(grid_width, grid_height)
@@ -25,7 +24,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, ship);
     Update();
-    renderer.Render(ship, asteroids);
+    renderer.Render(ship, _asteroids);
 
     frame_end = SDL_GetTicks();
 
@@ -51,17 +50,24 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::GenerateAsteroids() {
-  if (asteroids.size() == MAX_ASTEROIDS) return;
+  if (_asteroids.size() == MAX_ASTEROIDS) return;
   
-  int x, y, size;
-  while (asteroids.size() < MAX_ASTEROIDS ) {
+  float x, y, size;
+  while (_asteroids.size() < MAX_ASTEROIDS ) {
     x = random_w(engine);
     y = 0; 
-    size = 10 * random_size(engine);
+    size = random_size(engine) / 2;
 
-    if (!ship.ShipCell(x, y)) {
-      Asteroid a(_grid_width, _grid_height, x, y, size);
-      asteroids.push_back(a); // todo: leak
+    bool already_taken = false;
+    for (auto &a : _asteroids) {
+      if (a->AsteroidCell(x, y, a->Size(), a->Size())) {
+        already_taken = true;
+        break;
+      }
+    }
+    if (!already_taken && !ship.ShipCell(x, y)) {
+      auto a = std::make_unique<Asteroid>(_grid_width, _grid_height, x, y, size);
+      _asteroids.push_back(std::move(a));
     }
   }
 }
@@ -72,9 +78,9 @@ void Game::Update() {
   // remove destroyed asteriods
   while (true) 
   {
-    auto iter = std::find_if(asteroids.begin(), asteroids.end(), [](auto &a) { return a.Destroyed(); });
-    if (iter != asteroids.end())
-      asteroids.erase(iter);
+    auto iter = std::find_if(_asteroids.begin(), _asteroids.end(), [](auto &a) { return a->Destroyed(); });
+    if (iter != _asteroids.end())
+      _asteroids.erase(iter);
     else 
       break;
   }
@@ -84,23 +90,21 @@ void Game::Update() {
   ship.Update();
 
   // update asteroids & check collision!
-  int new_x = static_cast<int>(ship.x);
-  int new_y = static_cast<int>(ship.y);
-  for (auto &a : asteroids) {
-    a.Update();
-    if (abs(a.X() - new_x) <= 1  && abs(a.Y() - new_y) <= 1) {
+  for (auto &a : _asteroids) {
+    a->Update();
+    if (a->AsteroidCell(ship.x, ship.y, ship.Size(), ship.Size())) {
       ship.destroyed = true;
       return;
     }
 
     for (auto const& w : ship.weapons) {
-      if (!a.Destroyed() && abs(a.X() - w->x) <= 1 && abs(a.Y() - w->y) <= 1) {
-        a.Hit(w->Size());
+      if (!a->Destroyed() && a->AsteroidCell(w->x, w->y, w->Size(), w->Size())) {
+        a->Hit(w->Size());
         w->destroyed = true; 
       }
     }
 
-    if (a.Destroyed())
+    if (a->Destroyed())
       _score++;
   }
 }

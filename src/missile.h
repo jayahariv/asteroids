@@ -15,7 +15,7 @@ public:
     ~Missile() {};
 
     void Update() override;
-    float Size() override           { return 10.0f; };
+    float Size() override           { return 0.5f; };
 
 private:
     float _speed{0.1};

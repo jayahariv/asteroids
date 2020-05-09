@@ -41,4 +41,7 @@ void Missile::Update()
 {
     // todo: include angle !!
     y -= _speed;
+
+    if (x < 0 || y < 0)
+        destroyed = true; // out of frame
 }
