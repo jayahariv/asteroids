@@ -49,29 +49,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::GenerateAsteroids() {
-  if (_asteroids.size() == MAX_ASTEROIDS) return;
-  
-  float x, y, size;
-  while (_asteroids.size() < MAX_ASTEROIDS ) {
-    x = random_w(engine);
-    y = 0; 
-    size = random_size(engine) / 2;
-
-    bool already_taken = false;
-    for (auto &a : _asteroids) {
-      if (a->AsteroidCell(x, y, a->Size(), a->Size())) {
-        already_taken = true;
-        break;
-      }
-    }
-    if (!already_taken && !ship.ShipCell(x, y)) {
-      auto a = std::make_unique<Asteroid>(_grid_width, _grid_height, x, y, size);
-      _asteroids.push_back(std::move(a));
-    }
-  }
-}
-
 void Game::Update() {
   if (ship.destroyed) return;
 
@@ -106,5 +83,28 @@ void Game::Update() {
 
     if (a->Destroyed())
       _score++;
+  }
+}
+
+void Game::GenerateAsteroids() {
+  if (_asteroids.size() == MAX_ASTEROIDS) return;
+  
+  float x, y, size;
+  while (_asteroids.size() < MAX_ASTEROIDS ) {
+    x = random_w(engine);
+    y = 0; 
+    size = (float)random_size(engine) / (float)2;
+
+    bool already_taken = false;
+    for (auto &a : _asteroids) {
+      if (a->AsteroidCell(x, y, a->Size(), a->Size())) {
+        already_taken = true;
+        break;
+      }
+    }
+    if (!already_taken && !ship.ShipCell(x, y)) {
+      auto a = std::make_unique<Asteroid>(_grid_width, _grid_height, x, y, size);
+      _asteroids.push_back(std::move(a));
+    }
   }
 }
