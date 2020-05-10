@@ -37,11 +37,11 @@ public:
     bool destroyed{false};
     float x, y;                                     //postion of ship
     std::vector<std::unique_ptr<Weapon>> weapons;
+    float degree_rotation{270};     // ship to move up on start, needs y value to go down!
 
 private:
     int _grid_width, _grid_height;
     float _speed{0.1f};
-    float _rotation_angle{270};     // ship to move up on start, needs y value to go down!
     float _weapon_cooldown{0.3};    // (seconds) cool down before loading next weapon
 
     std::chrono::time_point<std::chrono::steady_clock> _last_weapon_load{std::chrono::steady_clock::now()};

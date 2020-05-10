@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include <math.h>
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -63,11 +64,27 @@ void Renderer::Render(Ship &ship, std::vector<std::unique_ptr<Asteroid>> &asteri
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   }
-  block.x = ship.x * width;
-  block.y = ship.y * height;
-  block.w = ship.Size() * width;
-  block.h = ship.Size() * height;
-  SDL_RenderFillRect(sdl_renderer, &block);
+  // triangle points
+  int x = ship.x * width;
+  int y = ship.y * height;
+  int size = ship.Size() * width;
+  int thetta = ship.degree_rotation * M_PI / 180; // in radians
+  
+  int p1 = x + size/2; 
+  int q1 = y;
+  int p2 = x;
+  int q2 = y + size;
+  int p3 = x + size;
+  int q3 = y + size;
+
+  const int POINTS = 4;
+  SDL_Point points[POINTS] = {
+    {p1, q1},
+    {p2, q2},
+    {p3, q3},
+    {p1, q1}
+  };
+  SDL_RenderDrawLines(sdl_renderer, points, POINTS);
   
   // Render Weapons
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);

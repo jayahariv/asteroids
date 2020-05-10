@@ -23,11 +23,11 @@ void Ship::Update()
 void Ship::UpdatePosition()
 {
     int turn_angle = 5;
-    _rotation_angle += angle == Angle::kLeft ?  -turn_angle : angle == Angle::kRight ? turn_angle : 0.0;
-    _rotation_angle = fmod(_rotation_angle, 360);
+    degree_rotation += angle == Angle::kLeft ?  -turn_angle : angle == Angle::kRight ? turn_angle : 0.0;
+    degree_rotation = fmod(degree_rotation, 360);
     
-    float dx = cos(_rotation_angle * M_PI / 180.0) * _speed;
-    float dy = sin(_rotation_angle * M_PI / 180.0) * _speed;
+    float dx = cos(degree_rotation * M_PI / 180.0) * _speed;
+    float dy = sin(degree_rotation * M_PI / 180.0) * _speed;
 
     x += direction == Direction::kForward ? dx : direction == Direction::kBackward ? -dx : 0.0;
     y += direction == Direction::kForward ? dy : direction == Direction::kBackward ? -dy : 0.0;
@@ -55,7 +55,7 @@ void Ship::LoadNewWeapon()
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> diff = now - _last_weapon_load;
     if (fire && diff.count() > _weapon_cooldown) {
-        auto w = std::make_unique<Missile>(_grid_width, _grid_height, x, y, _rotation_angle);
+        auto w = std::make_unique<Missile>(_grid_width, _grid_height, x, y, degree_rotation);
         weapons.push_back(std::move(w));
         _last_weapon_load = now;
     }
