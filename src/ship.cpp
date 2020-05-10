@@ -22,7 +22,7 @@ void Ship::Update()
 
 void Ship::UpdatePosition()
 {
-    int turn_angle = 5;
+    int turn_angle = 3;
     degree_rotation += angle == Angle::kLeft ?  -turn_angle : angle == Angle::kRight ? turn_angle : 0.0;
     degree_rotation = fmod(degree_rotation, 360);
     

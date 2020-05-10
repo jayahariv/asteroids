@@ -35,6 +35,7 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   ship_texture = IMG_LoadTexture(sdl_renderer, "../ship.png");
+  ast_texture = IMG_LoadTexture(sdl_renderer, "../ast.png");
 }
 
 Renderer::~Renderer() {
@@ -48,26 +49,19 @@ void Renderer::Render(Ship &ship, std::vector<std::unique_ptr<Asteroid>> &asteri
   float height = screen_height / grid_height;
 
   // Clear screen
-  SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
   // Render asteriods
   for (auto &a : asteriods) {
-    SDL_SetRenderDrawColor(sdl_renderer, a->Size() == 3 ? 0x99 : a->Size() == 2 ? 0x7E : 0xA9 , 0x4C, 0x00, 0xFF);
-    block.x = a->X() * width;
-    block.y = a->Y()  * height;
-    block.w = a->Size() * width;
-    block.h = a->Size() * height;
-    SDL_RenderFillRect(sdl_renderer, &block);
+    int x = a->X() * width;
+    int y = a->Y() * height;
+    int size = a->Size() * width;
+    const SDL_Rect rect = {x, y, size, size};
+    SDL_RenderCopyEx(sdl_renderer, ast_texture, NULL, &rect, 0, NULL, SDL_FLIP_NONE);
   }
 
   // Render Ship
-  if (ship.destroyed) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0x00, 0xFF);
-  } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  }
-  // triangle points
   int x = ship.x * width;
   int y = ship.y * height;
   int size = ship.Size() * width;

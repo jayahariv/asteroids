@@ -93,7 +93,7 @@ void Game::GenerateAsteroids() {
   while (_asteroids.size() < MAX_ASTEROIDS ) {
     x = random_w(engine);
     y = 0; 
-    size = (float)random_size(engine) / (float)2;
+    size = (float)random_size(engine);
 
     bool already_taken = false;
     for (auto &a : _asteroids) {

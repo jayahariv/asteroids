@@ -4,8 +4,7 @@
 class Asteroid {
 public:
     Asteroid() = delete;
-    Asteroid(int grid_width, int grid_height, float x, float y, float size)
-        : _x(x), _y(y), _grid_width(grid_width), _grid_height(grid_height), _size(size) {};
+    Asteroid(int grid_width, int grid_height, float x, float y, float size);
     
     void Update();
     const bool Destroyed()              { return _destroyed; };
@@ -13,7 +12,7 @@ public:
     const float X()                     { return _x; };
     const float Y()                     { return _y; };
     void Hit(float weaponSize)          { _impact = weaponSize; };
-    bool AsteroidCell(float x, float y, float w, float h) { 
+    bool AsteroidCell(float x, float y, float w, float h) {
         return x <= (_x + _size) && (x + w) >= _x && y <= (_y + _size) && (y + h) >= _y; 
     };
 
@@ -24,6 +23,7 @@ private:
     float _size; // size of the asteroid, 
     float _x, _y;
     float _impact{0}; // impact of hit
+
 };
 
 #endif
