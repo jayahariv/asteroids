@@ -22,32 +22,15 @@ void Ship::Update()
 
 void Ship::UpdatePosition()
 {
-    // todo: change this to use angle!!!
+    int turn_angle = 5;
+    _rotation_angle += angle == Angle::kLeft ?  -turn_angle : angle == Angle::kRight ? turn_angle : 0.0;
+    _rotation_angle = fmod(_rotation_angle, 360);
+    
+    float dx = cos(_rotation_angle * M_PI / 180.0) * _speed;
+    float dy = sin(_rotation_angle * M_PI / 180.0) * _speed;
 
-    switch (direction)
-    {
-    case Direction::kForward:
-        y -= _speed;
-        break;
-
-    case Direction::kBackward:
-        y += _speed;
-        break;
-    default: 
-        break;
-    }
-
-    switch (angle)
-    {
-    case Angle::kLeft:
-        x -= _speed;
-        break;
-    case Angle::kRight:
-        x += _speed;
-        break;
-    default: 
-        break;
-    }
+    x += direction == Direction::kForward ? dx : direction == Direction::kBackward ? -dx : 0.0;
+    y += direction == Direction::kForward ? dy : direction == Direction::kBackward ? -dy : 0.0;
 
     x = fmod(x + _grid_width, _grid_width);
     y = fmod(y + _grid_height, _grid_height);
