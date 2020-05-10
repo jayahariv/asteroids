@@ -4,8 +4,9 @@
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : ship(grid_width, grid_height)
     , engine(dev())
-    , random_w(0, static_cast<int>(grid_width - 3))  // width minus size 
+    , random_w(0, static_cast<int>(grid_width - 3))  // width minus asteroid size 
     , random_size(1, 3)
+    , random_angle(0, 360)
     , _grid_width(grid_width)
     , _grid_height(grid_height) { }
 
@@ -90,10 +91,16 @@ void Game::GenerateAsteroids() {
   if (_asteroids.size() == MAX_ASTEROIDS) return;
   
   float x, y, size;
+  int angle;
   while (_asteroids.size() < MAX_ASTEROIDS ) {
     x = random_w(engine);
-    y = 0; 
+    y = 0;
+    if ((int)x % 2 == 0) { // random left and top begining of asteroid
+      y = x;
+      x = 0;
+    }
     size = (float)random_size(engine);
+    angle = random_angle(engine);
 
     bool already_taken = false;
     for (auto &a : _asteroids) {
@@ -103,7 +110,7 @@ void Game::GenerateAsteroids() {
       }
     }
     if (!already_taken && !ship.ShipCell(x, y)) {
-      auto a = std::make_unique<Asteroid>(_grid_width, _grid_height, x, y, size);
+      auto a = std::make_unique<Asteroid>(_grid_width, _grid_height, x, y, size, angle);
       _asteroids.push_back(std::move(a));
     }
   }

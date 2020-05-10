@@ -4,7 +4,7 @@
 class Asteroid {
 public:
     Asteroid() = delete;
-    Asteroid(int grid_width, int grid_height, float x, float y, float size);
+    Asteroid(int grid_width, int grid_height, float x, float y, float size, int angle);
     
     void Update();
     const bool Destroyed()              { return _destroyed; };
@@ -23,7 +23,7 @@ private:
     float _size; // size of the asteroid, 
     float _x, _y;
     float _impact{0}; // impact of hit
-
+    int _angle;
 };
 
 #endif

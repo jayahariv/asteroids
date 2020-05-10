@@ -8,7 +8,7 @@
 #include "asteroid.h"
 #include "ship.h"
 
-static const int MAX_ASTEROIDS{5};
+static const int MAX_ASTEROIDS{8};
 
 class Game {
  public:
@@ -26,6 +26,7 @@ class Game {
   std::mt19937 engine;
   std::uniform_int_distribution<int> random_w;
   std::uniform_int_distribution<int> random_size;
+  std::uniform_int_distribution<int> random_angle;
 
   int _score{0};
 
