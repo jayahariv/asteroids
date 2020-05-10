@@ -1,6 +1,6 @@
 # asteriods
 
-- collition on image in inaccurate
 
+- stars?
 - break astroid to smaller pieces?
 - sound?

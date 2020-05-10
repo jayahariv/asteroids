@@ -70,7 +70,7 @@ void Game::Update() {
   // update asteroids & check collision!
   for (auto &a : _asteroids) {
     a->Update();
-    if (a->AsteroidCell(ship.x, ship.y, ship.Size(), ship.Size())) {
+    if (a->AsteroidCell(ship.x + ship.Size()/4, ship.y + ship.Size()/4, ship.Size()/2, ship.Size()/2)) {
       ship.destroyed = true;
       return;
     }
