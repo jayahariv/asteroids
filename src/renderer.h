@@ -4,7 +4,7 @@
 #include <vector>
 #include "SDL.h"
 #include "ship.h"
-#include "asteroid.h"
+#include "asteroid.h" 
 
 class Renderer {
  public:
@@ -18,6 +18,7 @@ class Renderer {
  private:
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer;
+  SDL_Texture * ship_texture;
 
   const std::size_t screen_width;
   const std::size_t screen_height;

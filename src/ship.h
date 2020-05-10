@@ -29,7 +29,7 @@ public:
 
     void Update();
     bool ShipCell(int x, int y) { return x == this->x && y == this->y; };
-    float Size()                { return 0.5f; };
+    float Size()                { return 2.0; };
 
     Direction direction = Direction::kNone;
     Angle angle = Angle::kNone;

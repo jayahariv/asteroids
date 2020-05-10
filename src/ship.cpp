@@ -55,7 +55,7 @@ void Ship::LoadNewWeapon()
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<double> diff = now - _last_weapon_load;
     if (fire && diff.count() > _weapon_cooldown) {
-        auto w = std::make_unique<Missile>(_grid_width, _grid_height, x, y, degree_rotation);
+        auto w = std::make_unique<Missile>(_grid_width, _grid_height, x + Size()/2, y + Size()/2, degree_rotation);
         weapons.push_back(std::move(w));
         _last_weapon_load = now;
     }
