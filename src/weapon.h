@@ -4,14 +4,14 @@
 class Weapon
 {
 public:
-    Weapon(int width, int height, float x, float y, float angle);
+    Weapon(int width, int height, float x, float y, float angle, float speed);
     Weapon(const Weapon &w);
     Weapon(Weapon &&w);
     Weapon &operator=(const Weapon &w);
     Weapon &operator=(Weapon &&w);
     virtual ~Weapon(){};
 
-    virtual void Update() = 0;
+    void Update();
     bool WeaponCell(int x, int y) { return x == this->x && y == this->y; };
     virtual float Size() = 0;
 
@@ -20,6 +20,7 @@ public:
 
 protected:
     float angle;
+    float speed{0.1f};
 
     int grid_width;
     int grid_height;

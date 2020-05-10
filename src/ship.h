@@ -35,7 +35,7 @@ public:
     Angle angle = Angle::kNone;
     bool fire{false};
     bool destroyed{false};
-    float x, y; //postion of ship
+    float x, y;                                     //postion of ship
     std::vector<std::unique_ptr<Weapon>> weapons;
 
 private:
