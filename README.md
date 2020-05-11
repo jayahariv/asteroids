@@ -31,6 +31,11 @@
 3. Compile: `cmake .. && make -j`
 4. Run it: `./AsteroidsGame`
 
+## How to play the game
+- top / down arrow keys to move forward and backward
+- left and right to rotate the ship
+- press `a` to fire
+
 
 ### Future
 - stars in the sky
