@@ -14,6 +14,9 @@ void Asteroid::Update()
     _size -= _impact;
     _impact = 0;
 
-    if (_x > _grid_width || _y > _grid_height || _size == 0)
+    if (_x > _grid_width || _y > _grid_height)
+        _inactive = true;
+
+    if (_size == 0)
         _destroyed = true;
 }

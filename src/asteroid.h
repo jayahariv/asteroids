@@ -7,7 +7,8 @@ public:
     Asteroid(int grid_width, int grid_height, float x, float y, float size, int angle);
     
     void Update();
-    const bool Destroyed()              { return _destroyed; };
+    const bool Destroyed()              { return _destroyed; };     // destroyed by weapon
+    const bool Inactive()              { return _inactive; };       // out of frame / end of life
     const float Size()                  { return _size; };
     const float X()                     { return _x; };
     const float Y()                     { return _y; };
@@ -20,6 +21,7 @@ private:
     float _speed{0.03};
     int _grid_width, _grid_height;
     bool _destroyed{false};
+    bool _inactive{false};
     float _size; // size of the asteroid, 
     float _x, _y;
     float _impact{0}; // impact of hit

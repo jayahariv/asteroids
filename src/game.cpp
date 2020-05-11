@@ -56,7 +56,7 @@ void Game::Update() {
   // remove destroyed asteriods
   while (true) 
   {
-    auto iter = std::find_if(_asteroids.begin(), _asteroids.end(), [](auto &a) { return a->Destroyed(); });
+    auto iter = std::find_if(_asteroids.begin(), _asteroids.end(), [](auto &a) { return a->Destroyed() || a->Inactive(); });
     if (iter != _asteroids.end())
       _asteroids.erase(iter);
     else 
@@ -76,7 +76,7 @@ void Game::Update() {
     }
 
     for (auto const& w : ship.weapons) {
-      if (!a->Destroyed() && a->AsteroidCell(w->x, w->y, w->Size(), w->Size())) {
+      if (!a->Destroyed() && !a->Inactive() && a->AsteroidCell(w->x, w->y, w->Size(), w->Size())) {
         a->Hit(w->Size());
         w->destroyed = true; 
       }
