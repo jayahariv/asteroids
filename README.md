@@ -36,6 +36,8 @@
 - left and right to rotate the ship
 - press `a` to fire
 
+![asteroids](https://user-images.githubusercontent.com/10448770/81580248-0fd64480-9362-11ea-837e-cff3c174ce2d.gif)
+
 
 ### Future
 - stars in the sky
