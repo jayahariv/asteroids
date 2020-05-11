@@ -2,6 +2,8 @@
 #define SHIP_H
 
 #include <vector>
+#include <algorithm>
+#include <memory>
 #include "SDL.h"
 #include <chrono>
 #include <ctime>

@@ -1,6 +1,8 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include <utility>
+
 class Weapon
 {
 public:
